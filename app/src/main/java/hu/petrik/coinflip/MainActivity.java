@@ -7,6 +7,9 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,6 +46,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tipp = 0;
+                /*if (dobott == 0){
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_out_fade_out));
+                    kep.setImageResource(R.drawable.heads);
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in_fade_in));
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_out_fade_out));
+                    kep.setImageResource(R.drawable.tails);
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in_fade_in));
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_out_fade_out));
+                }else{
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_out_fade_out));
+                    kep.setImageResource(R.drawable.tails);
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in_fade_in));
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_out_fade_out));
+                    kep.setImageResource(R.drawable.heads);
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in_fade_in));
+                    kep.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_out_fade_out));
+                }*/
                 dobas();
             }
         });
@@ -58,10 +78,13 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void dobas() {
-        RotateAnimation rotate = new RotateAnimation(0,360, RotateAnimation.RELATIVE_TO_SELF,0.5f, RotateAnimation.RELATIVE_TO_SELF,0.5f);
-        rotate.setDuration(500);
         dobott = r.nextInt(2);
+        RotateAnimation rotate = new RotateAnimation(0,360,RotateAnimation.RELATIVE_TO_SELF, .5f,RotateAnimation.RELATIVE_TO_SELF, .5f);
+        rotate.setRepeatCount(1);
+        rotate.setDuration(500);
+        kep.startAnimation(rotate);
         if (dobott == 0) {
+            kep.setImageResource(R.drawable.tails);
             kep.startAnimation(rotate);
             kep.setImageResource(R.drawable.heads);
             Toast.makeText(MainActivity.this, "Dobás eredménye: Fej", Toast.LENGTH_SHORT).show();
@@ -69,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             dobasok.setText("Dobások: " + dobasokSzama);
 
         } else {
+            kep.setImageResource(R.drawable.heads);
             kep.startAnimation(rotate);
             kep.setImageResource(R.drawable.tails);
             Toast.makeText(MainActivity.this, "Dobás eredménye: Írás", Toast.LENGTH_SHORT).show();
