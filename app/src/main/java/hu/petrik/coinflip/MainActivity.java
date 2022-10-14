@@ -7,12 +7,14 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,19 +58,24 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void dobas() {
+        RotateAnimation rotate = new RotateAnimation(0,360, RotateAnimation.RELATIVE_TO_SELF,0.5f, RotateAnimation.RELATIVE_TO_SELF,0.5f);
+        rotate.setDuration(500);
         dobott = r.nextInt(2);
         if (dobott == 0) {
+            kep.startAnimation(rotate);
             kep.setImageResource(R.drawable.heads);
             Toast.makeText(MainActivity.this, "Dobás eredménye: Fej", Toast.LENGTH_SHORT).show();
             dobasokSzama++;
             dobasok.setText("Dobások: " + dobasokSzama);
 
         } else {
+            kep.startAnimation(rotate);
             kep.setImageResource(R.drawable.tails);
             Toast.makeText(MainActivity.this, "Dobás eredménye: Írás", Toast.LENGTH_SHORT).show();
             dobasokSzama++;
             dobasok.setText("Dobások: " + dobasokSzama);
         }
+
         if (tipp == dobott) {
             win++;
             gyozelem.setText("Győzelem: " + win);
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             vereseg.setText("Vereség: " + lose);
         }
         korok++;
-        if (korok == 5) {
+        if (korok == 5 || (win == 3 && lose < 2) || (lose == 3 && win < 2)) {
             vege = new AlertDialog.Builder(MainActivity.this);
             if (lose > win) {
                 vege.setTitle("Vereség");
