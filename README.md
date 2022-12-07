@@ -1,1 +1,1 @@
-# SarandiBalint_CoinFlip
+## Android Studio
